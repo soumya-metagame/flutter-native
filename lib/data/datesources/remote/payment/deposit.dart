@@ -5,7 +5,7 @@ import 'package:crashorcash/utils/helpers/api_response.dart';
 import 'package:crashorcash/utils/helpers/api_service.dart';
 // import 'package:crashorcash/utils/helpers/user_token_manager.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
 Future<Object> deposit(
     String userId,
@@ -46,8 +46,8 @@ Future<Object> deposit(
 
     return responseData;
   } on DioException catch (e) {
-    print("Error: $e");
-    Get.offAllNamed("/auth");
+    // print("Error: $e");
+    // Get.offAllNamed("/auth");
     if (e.response != null) {
       if (e.response?.statusCode == 400) {
         print(e.response?.data);

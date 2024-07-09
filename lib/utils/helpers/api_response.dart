@@ -9,11 +9,13 @@ class ApiResponse<T> {
   ApiResponse({this.message, this.code, this.data, this.isError = false});
 
   factory ApiResponse.fromJson(
-      Map<String, dynamic> json, T Function(dynamic) fromJsonT) {
+      Map<String, dynamic> json, T Function(dynamic)? fromJsonT) {
     return ApiResponse<T>(
       message: json['message'] ?? '',
       code: json['code'] ?? '',
-      data: json['data'] != null ? fromJsonT(json['data']) : null,
+      data: json['data'] != null
+          ? (fromJsonT != null ? fromJsonT(json['data']) : json['data'] as T)
+          : null,
     );
   }
 
@@ -22,11 +24,12 @@ class ApiResponse<T> {
         message: message, code: '', data: null, isError: true);
   }
 
-  Map<String, dynamic> toJson(Map<String, dynamic> Function(T) toJsonT) {
+  Map<String, dynamic> toJson({Map<String, dynamic> Function(T)? toJsonT}) {
     return {
       'message': message,
       'code': code,
-      'data': data != null ? toJsonT(data as T) : null,
+      'data':
+          data != null ? (toJsonT != null ? toJsonT(data as T) : data) : null,
     };
   }
 }

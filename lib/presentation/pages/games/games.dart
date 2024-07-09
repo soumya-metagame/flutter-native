@@ -1,20 +1,23 @@
+import 'package:crashorcash/layout.dart';
 import 'package:crashorcash/presentation/controllers/games/games_controller.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class Games extends GetView<GamesController> {
   const Games({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Layout(
+      child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/lobby-blurred-bg.png"),
-              fit: BoxFit.cover),
+            image: AssetImage("assets/images/lobby-blurred-bg.png"),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
@@ -26,12 +29,9 @@ class Games extends GetView<GamesController> {
               ),
               Expanded(
                 child: Obx(() {
-                  if (controller.games.isEmpty) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return GridView.builder(
+                  return Skeletonizer(
+                    enabled: controller.games.isEmpty,
+                    child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
@@ -98,8 +98,8 @@ class Games extends GetView<GamesController> {
                           },
                         );
                       },
-                    );
-                  }
+                    ),
+                  );
                 }),
               ),
             ],

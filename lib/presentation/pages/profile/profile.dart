@@ -1,4 +1,5 @@
-
+import 'package:crashorcash/layout.dart';
+import 'package:crashorcash/presentation/controllers/layout/navigation_controller.dart';
 import 'package:crashorcash/presentation/controllers/profile/logout_controller.dart';
 import 'package:crashorcash/presentation/widgets/gradient-text.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';
@@ -18,7 +19,19 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var me = UserTokenManager().user;
-  List<String> amounts = ["2", "100", "300", "1500", "3000", "6000"];
+
+  final NavigationController _navigationController = NavigationController();
+
+  final List<Map<String, dynamic>> links = [
+    {"name": "EDIT PROFILE", "link": "/edit-profile"},
+    {"name": "CHANGE PASSWORD", "link": "/edit-password"},
+    {"name": "UPDATE ADDRESS", "link": "/update-address"},
+    {"name": "UPDATE KYC", "link": "/update-kyc"},
+    {"name": "ACCOUNT SUMMARY", "link": "/account-summary"}
+  ];
+
+  List<Widget> navLinks = List.empty();
+
   final LogoutController logoutController = Get.put(LogoutController());
 
   String _ellipsize(String text, {int maxLength = 10}) {
@@ -57,8 +70,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Layout(
+      child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/lobby-blurred-bg.png"),
@@ -415,7 +428,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    _showUpdateDrawer();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.transparent,
@@ -602,5 +615,56 @@ class _ProfileState extends State<Profile> {
             )),
           );
         });
+  }
+
+  _showUpdateDrawer() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: AppColor.primaryRedGradient,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
+          ),
+          height: 600,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: links.map((link) {
+                return GestureDetector(
+                  onTap: () {
+                    _navigationController.navigateToEditProfile();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black45,
+                      borderRadius: BorderRadius.circular(
+                        14.0,
+                      ),
+                    ),
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      bottom: 20,
+                    ),
+                    child: Center(
+                      child: GradientText(
+                        text: link["name"]!,
+                        textType: TextType.heading,
+                        gradient: AppColor.yellowGradient,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

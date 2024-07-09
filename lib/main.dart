@@ -1,4 +1,5 @@
 import 'package:crashorcash/config/router/routes.dart';
+import 'package:crashorcash/presentation/controllers/layout/navigation_controller.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,8 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  Get.put(NavigationController());
+
   runApp(MyApp(initialRoute: initialRoute));
 }
 
@@ -39,7 +42,6 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.montserratTextTheme(),
           fontFamily: 'Montserrat',
           scaffoldBackgroundColor: AppColor.falu_red_2,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         initialRoute: initialRoute,

@@ -1,25 +1,17 @@
-import 'package:crashorcash/domain/models/res/fetch_game_list.dart';
-// import 'package:crashorcash/utils/constants/app_constants.dart';
+import 'package:crashorcash/utils/helpers/api_response.dart';
 import 'package:crashorcash/utils/helpers/api_service.dart';
-// import 'package:crashorcash/utils/helpers/user_token_manager.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
 
-Future<Object> fetchGameList() async {
-  const apiUrl = '/core/game/list';
+Future<Object> fetchTransactionByOrderId(String OrderId) async {
+  final apiUrl = '/payment/deposit/transaction/$OrderId';
 
   try {
-    final response = await ApiService.instance.request(apiUrl, DioMethod.post);
+    final response = await ApiService.instance.request(apiUrl, DioMethod.get);
 
-    // print("RESPONSE---------------------------------------------------");
-    // print(response.data);
-
-    final responseData = GameListResponseModel.fromJson(response.data);
+    final responseData = ApiResponse.fromJson(response.data, null);
 
     return responseData;
   } on DioException catch (e) {
-    // print("Error: $e");
-    // Get.offAllNamed("/auth");
     if (e.response != null) {
       if (e.response?.statusCode == 400) {
         print(e.response?.data);

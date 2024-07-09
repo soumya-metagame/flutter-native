@@ -1,4 +1,4 @@
-import 'package:crashorcash/navigation_menu.dart';
+import 'package:crashorcash/presentation/controllers/layout/navigation_controller.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +15,7 @@ Widget buildNavItem({
   return GestureDetector(
       onTap: () {
         controller.selectedIndex.value = index;
+        controller.navigateTo(index);
         // Get.to(() => Get.to(() => Get.to("/games")));
       },
       child: Stack(

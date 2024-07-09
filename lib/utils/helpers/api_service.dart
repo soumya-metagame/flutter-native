@@ -6,7 +6,7 @@ import 'package:crashorcash/utils/helpers/user_token_manager.dart';
 import 'package:dio/dio.dart';
 // import 'package:get/get.dart';
 
-enum DioMethod { post, get, put, patch, delete }
+enum DioMethod { post, get, patch, delete }
 
 class ApiService {
   ApiService._singleton();
@@ -40,11 +40,11 @@ class ApiService {
       case DioMethod.post:
         return dio.post(endPoint, data: param ?? formData);
       case DioMethod.get:
-        return dio.post(endPoint, queryParameters: param);
-      case DioMethod.put:
-        return dio.post(endPoint, data: param ?? formData);
+        return dio.get(endPoint, queryParameters: param);
+      case DioMethod.patch:
+        return dio.patch(endPoint, data: param ?? formData);
       case DioMethod.delete:
-        return dio.post(endPoint, data: param ?? formData);
+        return dio.delete(endPoint, data: param ?? formData);
       default:
         return dio.post(endPoint, data: param ?? formData);
     }

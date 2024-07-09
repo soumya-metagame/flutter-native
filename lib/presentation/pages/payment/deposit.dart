@@ -1,3 +1,4 @@
+import 'package:crashorcash/layout.dart';
 import 'package:crashorcash/presentation/controllers/payment/deposit_controller.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';
 import 'package:flutter/material.dart';
@@ -16,23 +17,37 @@ class _DepositState extends State<Deposit> {
   List<String> amounts = ["2", "100", "300", "1500", "3000", "6000"];
   String selectedAmount = "2";
 
+  bool _loading = false;
+
   DepositController depositController = DepositController();
 
   Future<void> _deposit() async {
+    setState(() {
+      _loading = true;
+    });
     final response = await depositController.createDeposit(selectedAmount);
 
+    setState(() {
+      _loading = false;
+    });
+
     if (response.data?.url != '') {
-      // Get.offNamed(
-      //   '/payment',
-      //   parameters: {"url": response.data!.url},
+      Get.toNamed(
+        '/payment',
+        parameters: {"url": response.data!.url},
+      );
+
+      // Get.toNamed(
+      //   '/payment-success',
+      //   parameters: {"order_id": "c4bd3b3aabd5d6e072f482b9d63e678e"},
       // );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Layout(
+      child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/lobby-blurred-bg.png"),
@@ -104,7 +119,7 @@ class _DepositState extends State<Deposit> {
                               },
                               child: Card(
                                 child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 150),
                                   height: 70,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -180,7 +195,7 @@ class _DepositState extends State<Deposit> {
                                 gradient: AppColor.primaryRedGradient,
                               ),
                               child: Center(
-                                child: !depositController.loading
+                                child: !_loading
                                     ? Text(
                                         "Add Money",
                                         style: GoogleFonts.montserrat(

@@ -1,4 +1,4 @@
-import 'package:crashorcash/navigation_menu.dart';
+import 'package:crashorcash/presentation/controllers/layout/navigation_controller.dart';
 
 import 'build_nav_item.dart';
 import 'package:crashorcash/utils/constants/app_color.dart';

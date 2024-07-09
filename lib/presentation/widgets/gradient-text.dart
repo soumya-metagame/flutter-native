@@ -48,7 +48,7 @@ class GradientText extends StatelessWidget {
       default:
         return GoogleFonts.montserrat(
           fontSize: 14.0,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w400,
           color: Colors.white,
         );
     }

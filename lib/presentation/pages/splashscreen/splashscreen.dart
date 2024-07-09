@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crashorcash/layout.dart';
 import 'package:crashorcash/navigation_menu.dart';
 import 'package:crashorcash/utils/helpers/user_token_manager.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 2),
         () => initialRoute == '/games'
-            ? Get.to(() => const NavigationMenu())
+            ? Get.off(() => const NavigationMenu())
             : Get.offNamed(initialRoute));
   }
 

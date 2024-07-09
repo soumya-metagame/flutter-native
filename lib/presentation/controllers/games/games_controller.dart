@@ -25,6 +25,9 @@ class GamesController extends GetxController {
       if (response is GameListResponseModel && response.code == 'G200') {
         games.value = response.data.games;
 
+        print("--------------------GAMES---------------------");
+        print(response.data.games);
+
         for (var game in games) {
           await processGameIcon(game.icon);
         }

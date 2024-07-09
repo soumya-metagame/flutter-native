@@ -249,124 +249,15 @@ class __AuthenticationPageState extends State<Authentication> {
 
         if (fetchUserResponse is FetchLoggedInUserResponse &&
             fetchUserResponse.code == 'CU200') {
-          print('Response from the FETCH-LOGGEDIN-USER: $fetchUserResponse');
-          print(fetchUserResponse.data);
+          // print('Response from the FETCH-LOGGEDIN-USER: $fetchUserResponse');
+          // print(fetchUserResponse.data);
           userTokenManager.setUserData(fetchUserResponse.data!);
           Get.to(() => const NavigationMenu());
         } else {
           print('Response from the FETCH-LOGGEDIN-USER: $fetchUserResponse');
         }
       } else if (response is VerifyOTPResponse && response.code == 'PS405') {
-        showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                decoration: const BoxDecoration(
-                    gradient: AppColor.primaryRedGradient,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(26.0),
-                        topRight: Radius.circular(26.0))),
-                height: 600,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      GradientText(
-                        'TERMINATE SESSION',
-                        colors: const [Color(0xFFFBC104), Color(0xFFFFFF96)],
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w600),
-                      ),
-                      Image.asset(
-                        'assets/images/notification.png',
-                        height: 100,
-                      ),
-                      const Text(
-                        "You've already logged onto another\ndevice. click ok to terminate the\nother session and continue with the \ncurrent session",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColor.yellow,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 150,
-                            padding: const EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                              gradient: AppColor.yellowGradient,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: AppColor.primaryBlueGradient,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                ),
-                                child: const Text(
-                                  'CANCEL',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 40,
-                            width: 150,
-                            padding: const EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                              gradient: AppColor.yellowGradient,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                gradient: AppColor.primaryRedGradient,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  _terminateSession();
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                ),
-                                child: const Text(
-                                  'OK',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )),
-              );
-            });
+        _showTerminateSessionDrawer();
       }
     } catch (error) {
       setState(() {
@@ -671,5 +562,125 @@ class __AuthenticationPageState extends State<Authentication> {
         ),
       ),
     );
+  }
+
+  _showTerminateSessionDrawer() {
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: AppColor.primaryRedGradient,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(26.0),
+                topRight: Radius.circular(26.0),
+              ),
+            ),
+            height: 600,
+            child: Center(
+                child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                10.0,
+                20.0,
+                10.0,
+                20.0,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  GradientText(
+                    'TERMINATE SESSION',
+                    colors: const [Color(0xFFFBC104), Color(0xFFFFFF96)],
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.w600),
+                  ),
+                  Image.asset(
+                    'assets/images/notification.png',
+                    height: 100,
+                  ),
+                  const Text(
+                    "You've already logged onto another\ndevice. click ok to terminate the\nother session and continue with the \ncurrent session",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColor.yellow,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 150,
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          gradient: AppColor.yellowGradient,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: AppColor.primaryBlueGradient,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                            ),
+                            child: const Text(
+                              'CANCEL',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        width: 150,
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          gradient: AppColor.yellowGradient,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: AppColor.primaryRedGradient,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              _terminateSession();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                            ),
+                            child: const Text(
+                              'OK',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )),
+          );
+        });
   }
 }

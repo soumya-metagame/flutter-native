@@ -11,10 +11,6 @@ Future<Object> fetchLoggedinUser() async {
   const apiUrl = '$baseUrl/core/player/me';
 
   final token = UserTokenManager().accessToken;
-
-  print('------------------------------------------------------------');
-  print(token);
-
   // final accessToken = token.accessToken;
 
   try {

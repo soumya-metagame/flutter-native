@@ -14,7 +14,6 @@ class DepositController extends GetxController {
 
   Future<ApiResponse<DepositResponseModel>> createDeposit(String amount) async {
     try {
-      loading = true;
       final depositResponse = await deposit(
         me['_id'],
         me['name']?.trimRight() ??
@@ -32,11 +31,9 @@ class DepositController extends GetxController {
       ) as ApiResponse<DepositResponseModel>;
 
       response.value = depositResponse;
-      loading = false;
       return depositResponse;
     } catch (e) {
       print(e);
-      loading = false;
       return ApiResponse<DepositResponseModel>.error("An error occurred");
     }
   }
